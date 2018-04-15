@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -35,7 +36,9 @@ import {AuthService} from "../services/auth.service";
                  class="form-control">
         </div>
         
-        <small class="text-danger">{{ errorMsg }}</small>
+        <div class="lead">
+          <small class="text-danger">{{ errorMsg }}</small>
+        </div>
         
         <button type="submit" class="btn btn-outline-primary">register</button>
 
@@ -55,12 +58,13 @@ export class RegisterComponent {
   registerInfo = {name: '', email: '', password: '', phone: ''};
   errorMsg = '';
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {
   }
 
   register() {
     this.auth.register(this.registerInfo)
-        .catch( error => this.errorMsg = error.message)
+        .then( () => this.router.navigate(['dashboard']) )
+        .catch( ({ message }) => this.errorMsg = message )
   }
 
 }

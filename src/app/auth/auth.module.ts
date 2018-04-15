@@ -7,6 +7,7 @@ import { RecoverPasswordComponent } from './components/recover-password.componen
 import {RouterModule} from "@angular/router";
 import { AuthService } from './services/auth.service';
 import {FormsModule} from "@angular/forms";
+import {AuthGuard} from "./services/auth.guard";
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import {FormsModule} from "@angular/forms";
   ],
   declarations: [AuthComponent, SignInComponent, RegisterComponent, RecoverPasswordComponent],
   exports: [AuthComponent],
-  providers: [AuthService]
+  providers: [AuthService, AuthGuard]
 })
 export class AuthModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-in',
@@ -16,7 +17,9 @@ import {AuthService} from "../services/auth.service";
             <label>Password</label>
             <input type="password" name="password" [(ngModel)]="authInfo.password" class="form-control">
           </div>
-            
+              
+          <small class="text-danger">{{ errorMsg }}</small>
+          
           <button type="submit" class="btn btn-outline-primary">submit</button>
           
         </form>
@@ -32,11 +35,14 @@ import {AuthService} from "../services/auth.service";
 export class SignInComponent {
 
   authInfo = {email: '', password: ''};
+  errorMsg = '';
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   signIn() {
     this.auth.signIn(this.authInfo)
+        .then( () => this.router.navigate(['dashboard']) )
+        .catch( ({ message }) => this.errorMsg = message )
   }
 
 }
