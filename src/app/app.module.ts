@@ -7,6 +7,7 @@ import {environment} from "../environments/environment";
 import {RouterModule} from "@angular/router";
 import {AuthComponent} from "./auth/containers/auth.component";
 import {AuthModule} from "./auth/auth.module";
+import {AngularFireAuthModule} from "angularfire2/auth";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {AuthModule} from "./auth/auth.module";
     BrowserModule,
     AuthModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     RouterModule.forRoot([
       { path: '', component: AuthComponent }
     ])

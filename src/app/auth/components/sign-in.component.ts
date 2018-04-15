@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-sign-in',
   template: `      
       <div class="col-6">
         <h2>Sign in</h2>
-        <form>
+        <form (ngSubmit)="signIn()">
           <div class="form-group">
             <label>Email address</label>
-            <input type="text" class="form-control">
+            <input type="text" name="username" [(ngModel)]="authInfo.email" class="form-control">
           </div>
           
           <div class="form-group">
             <label>Password</label>
-            <input type="password" class="form-control">
+            <input type="password" name="password" [(ngModel)]="authInfo.password" class="form-control">
           </div>
             
           <button type="submit" class="btn btn-outline-primary">submit</button>
@@ -28,11 +29,14 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
 
-  constructor() { }
+  authInfo = {email: '', password: ''};
 
-  ngOnInit() {
+  constructor(private auth: AuthService) {}
+
+  signIn() {
+    this.auth.signIn(this.authInfo)
   }
 
 }

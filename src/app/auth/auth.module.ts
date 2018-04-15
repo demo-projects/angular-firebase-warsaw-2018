@@ -5,10 +5,13 @@ import { SignInComponent } from './components/sign-in.component';
 import { RegisterComponent } from './components/register.component';
 import { RecoverPasswordComponent } from './components/recover-password.component';
 import {RouterModule} from "@angular/router";
+import { AuthService } from './services/auth.service';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild([
       { path: '', component: SignInComponent },
       { path: 'register', component: RegisterComponent },
@@ -16,6 +19,7 @@ import {RouterModule} from "@angular/router";
     ])
   ],
   declarations: [AuthComponent, SignInComponent, RegisterComponent, RecoverPasswordComponent],
-  exports: [AuthComponent]
+  exports: [AuthComponent],
+  providers: [AuthService]
 })
 export class AuthModule { }

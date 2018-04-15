@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-recover-password',
   template: `
     <div class="col-6">
       <h2>Recover your password</h2>
-      <form>
+      <form (ngSubmit)="auth.recoverPassword(email)">
         <div class="form-group">
           <label>Email</label>
-          <input type="text" class="form-control">
+          <input type="text" name="email" [(ngModel)]="email" class="form-control" autofocus>
         </div>
         
         <button type="submit" class="btn btn-outline-primary">recover</button>
@@ -22,11 +23,11 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class RecoverPasswordComponent implements OnInit {
+export class RecoverPasswordComponent  {
 
-  constructor() { }
+  email = '';
+  auth: AuthService;
 
-  ngOnInit() {
-  }
-
+  constructor(auth: AuthService) {
+    this.auth = auth;}
 }

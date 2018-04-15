@@ -1,48 +1,66 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-register',
   template: `
     <div class="col-6">
       <h2>Register</h2>
-      <form>
+      <form (ngSubmit)="register()">
         <div class="form-group">
           <label>Full name</label>
-          <input type="text" class="form-control">
+          <input name="name"
+                 [(ngModel)]="registerInfo.name"
+                 class="form-control"
+                 autofocus>
         </div>
 
         <div class="form-group">
           <label>Email address</label>
-          <input type="text" class="form-control">
+          <input name="email" [(ngModel)]="registerInfo.email"
+                 class="form-control">
         </div>
 
         <div class="form-group">
           <label>Password</label>
-          <input type="password" class="form-control">
+          <input type="password" name="password"
+                 [(ngModel)]="registerInfo.password" class="form-control">
         </div>
 
         <div class="form-group">
           <label>Phone Number</label>
-          <input type="number" class="form-control">
+          <input type="number"
+                 name="phone"
+                 [(ngModel)]="registerInfo.phone"
+                 class="form-control">
         </div>
-
-        <button type="submit" class="btn btn-outline-primary">register</button>
         
+        <small class="text-danger">{{ errorMsg }}</small>
+        
+        <button type="submit" class="btn btn-outline-primary">register</button>
+
       </form>
 
       <div style="margin-top: 25px" class="text-center">
-        <a routerLink="">Sign In</a> | <a routerLink="../recover">recover your password</a>
+        <a routerLink="">Sign In</a> | <a routerLink="../recover">recover your
+        password</a>
       </div>
 
     </div>
   `,
   styles: []
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
-  constructor() { }
+  registerInfo = {name: '', email: '', password: '', phone: ''};
+  errorMsg = '';
 
-  ngOnInit() {
+  constructor(private auth: AuthService) {
+  }
+
+  register() {
+    this.auth.register(this.registerInfo)
+        .catch( error => this.errorMsg = error.message)
   }
 
 }
